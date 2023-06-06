@@ -3,20 +3,7 @@ let taskName = document.getElementById("taskName");
 let taskPriority = document.getElementById("taskPriority");
 let add = document.getElementById("add");
 let allPriority = ["Low", "Intermediate", "High"];
-let tasks = [
-    {
-        name: "Task1",
-        priority: 2,
-    },
-    {
-        name: "Task2",
-        priority: 0,
-    },
-    {
-        name: "Task3",
-        priority: 1,
-    },
-];
+let tasks = [];
 
 function write() {
     counter = 1;
@@ -120,8 +107,6 @@ const sortByName = function(){
     write();
 }
 const sortByPriority = function(){
-    tasks.sort((a, b) =>
-        a.priority < b.priority ? 1 : b.priority < a.priority ? -1 : 0
-    );
+     
     write();
 }
