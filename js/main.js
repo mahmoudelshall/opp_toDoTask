@@ -11,8 +11,8 @@ function write() {
     for (const key in tasks) {
         tbody.innerHTML += ` <tr>
                               <th>${counter}</th>
-                              <td>${tasks[key].name}</td>
-                              <td> ${allPriority[tasks[key].priority]}</td>
+                              <td>${tasks[key].getName()}</td>
+                              <td> ${allPriority[tasks[key].getPriorityValue()]}</td>
                               <td>
                               <div class = "d-flex">
                                  <i class="bi bi-trash fs-4  text-danger delete" data-id=${key} onclick="deleteTask(${key},this)"></i>
@@ -28,7 +28,7 @@ function write() {
 // window.onload.write();
 window.onload = function () {
     tasks.sort((a, b) =>
-        a.priority < b.priority ? 1 : b.priority < a.priority ? -1 : 0
+        a.priorityValue < b.priorityValue ? 1 : b.priorityValue < a.priorityValue ? -1 : 0
     );
     write();
 };
@@ -37,17 +37,16 @@ function addNew() {
         alert("Invalid Task Data!!")
         return;
     }
-    let newTask = {
-        name: taskName.value,
-        priority: Number(taskPriority.value),
-    };
+ 
+    let newTask = new Task(taskName.value,Number(taskPriority.value));
     tasks.push(newTask);
     taskName.value = "";
     taskPriority.value = "";
     tasks.sort((a, b) =>
-        a.priority < b.priority ? 1 : b.priority < a.priority ? -1 : 0
+        a.getPriorityValue() < b.getPriorityValue() ? 1 : b.getPriorityValue() < a.getPriorityValue() ? -1 : 0
     );
     write();
+    
 }
 add.onclick = addNew;
 // add.addEventListener("click", addNew);
@@ -64,16 +63,16 @@ let editTask = function (key, el) {
     let priorityTd = el.parentElement.parentElement.previousElementSibling;
     let nameTd = priorityTd.previousElementSibling;
    
-    el.classList.add('hidden');
+    el.classList.add('hidden');    
     deleteBtn.classList.add('hidden');
     saveBtn.classList.remove('hidden');
     cancelBtn.classList.remove('hidden');
-    nameTd.innerHTML = `<input class="form-control" value="${tasks[key].name}" />`
+    nameTd.innerHTML = `<input class="form-control" value="${tasks[key].getName()}" />`
 
     let options = ''
     for (i in allPriority) {
 
-        options += `<option ${i == tasks[key].priority ? 'selected' : ''} value="${i}">${allPriority[i]}</option>`
+        options += `<option ${i == tasks[key].getPriorityValue() ? 'selected' : ''} value="${i}">${allPriority[i]}</option>`
     }
 
     priorityTd.innerHTML = `<select class="form-select">${options}</select>`
@@ -93,20 +92,22 @@ let updateTask = function (key, el) {
         alert("Invalid Task Data!!")
         return;
     }
-    tasks[key].name = taskName.value;
-    tasks[key].priority = taskPriority.value;
+    tasks[key].setName(taskName.value);
+    tasks[key].setPriorityValue (taskPriority.value);
     tasks.sort((a, b) =>
-        a.priority < b.priority ? 1 : b.priority < a.priority ? -1 : 0
+        a.getPriorityValue() < b.getPriorityValue() ? 1 : b.getPriorityValue() < a.getPriorityValue() ? -1 : 0
     );
     write();
 }
-const sortByName = function(){
+ function sortByName(){
     tasks.sort((a, b) =>
-        a.name.toLowerCase() > b.name.toLowerCase() ? 1 : b.name.toLowerCase() > a.name.toLowerCase() ? -1 : 0
+        a.getName().toLowerCase() > b.getName().toLowerCase() ? 1 : b.getName().toLowerCase() > a.getName().toLowerCase() ? -1 : 0
     );
     write();
 }
-const sortByPriority = function(){
-     
+function sortByPriority (){
+    tasks.sort((a, b) =>
+    a.getPriorityValue() < b.getPriorityValue() ? 1 : b.getPriorityValue() < a.getPriorityValue() ? -1 : 0
+);
     write();
 }

@@ -1,14 +1,15 @@
 class Task{
     #name;
     #priorityValue;
-    #priorityName;
+    get priorityValue() {return this.#priorityValue}
+    // #priorityName;
     #status;
     #deleteCheck;
 
     constructor(name, priorityValue, priorityName){ 
         this.#name = name;
         this.#priorityValue = priorityValue;
-        this.#priorityName = priorityName;
+        //this.#priorityName = priorityName;
         this.#status = "Pending";
         this.#deleteCheck = false;
     }
@@ -29,13 +30,13 @@ class Task{
         return  this.#priorityValue;
     }
 
-   // priorityName set & get
-   setPriorityName(priorityName){ 
-    this.#priorityName = priorityName;
-    }
-    getPriorityName(){ 
-        return  this.#priorityName;
-    }
+//    // priorityName set & get
+//    setPriorityName(priorityName){ 
+//     this.#priorityName = priorityName;
+//     }
+//     getPriorityName(){ 
+//         return  this.#priorityName;
+//     }
        // status set & get
    setStatus(status){ 
     this.#status = status;
@@ -52,3 +53,17 @@ class Task{
     }
     
 }
+
+
+
+// class TasksList{
+//     #tasks=[];
+//      // tasks set & get
+//      addTask(newTask){ 
+//         this.#tasks.push(newTask);
+//     }
+//     getTasks(){ 
+//         return this.#tasks;
+//     }
+    
+// }
